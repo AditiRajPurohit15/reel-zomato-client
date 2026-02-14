@@ -1,7 +1,10 @@
 import { useState } from "react";
 import { loginController } from "../../services/auth.api";
+import { useDispatch } from "react-redux";
+import { setLogin } from "../../redux/authSlice";
 
 const Login = () => {
+  const dispatch = useDispatch();
   const [formData, setformData] = useState({
     email: "",
     password: "",
@@ -18,7 +21,8 @@ const Login = () => {
     e.preventDefault();
     try {
       const data = await loginController(formData);
-      alert("Logged in successfully");
+      console.log("API RESPONSE:", data);
+      dispatch(setLogin(data));
     } catch (err) {
       alert(err.response?.data?.message || "Login failed");
     }
