@@ -5,18 +5,19 @@ import axios from '../services/api';
 
 const AuthInitializer = ()=>{
     const dispatch = useDispatch();
-    const token = state.auth.token;
-    const role = state.auth.role;
+    const token = useSelector((state)=>state.auth.token);
+    const role = useSelector((state)=>state.auth.role);
 
     useEffect(()=>{
         const loadUser = async ()=>{
             try {
-                const res = await axios.get("/profile/me")
+                const res = await axios.get("api/profile/me")
                 dispatch(setLogin({
                     user: res.data.user,
                     token: token,
                     role: role
                 }))
+                console.log("user restored automatically!")
             } catch (error) {
                 console.log("auto restore failed")
             }
