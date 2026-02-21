@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { registerController } from "../../services/auth.api";
+import AuthLayout from "./AuthLayout";
 
 const Register = () => {
     const [formData, setformData] = useState({
@@ -28,13 +29,15 @@ const Register = () => {
     }
 
   return (
-    <div className="flex items-center justify-center h-screen flex-col gap-8 bg-gray-500">
-      {/* <h2 className="text-5xl text-blue-500 ">Register</h2> */}
+    <AuthLayout>
       <form onSubmit={handleSubmit}
-      className="bg-white p-10 rounded-xl w-full max-w-md flex flex-col gap-3"
+      className="bg-white p-10 rounded-2xl shadow-xl w-full max-w-md flex flex-col gap-4"
       >
+         <h2 className="text-2xl font-semibold text-center">
+        Create Account
+        </h2>
         <input 
-        className="w-full p-3 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 outline-none"
         type="text" 
         name="fullName"
         placeholder="Full Name"
@@ -44,7 +47,7 @@ const Register = () => {
         />
         
         <input 
-        className="w-full p-3 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 outline-none"
         type="text"
         name="email"
         placeholder="Email"
@@ -54,7 +57,7 @@ const Register = () => {
         />
         
         <input 
-        className="w-full p-3 border border-gray-300 rounded-lg text-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 outline-none"
         type="text" 
         name="password"
         placeholder="Password"
@@ -63,9 +66,9 @@ const Register = () => {
         required
         />
         
-        <button type="submit" className="bg-blue-600 text-white py-3 rounded-lg text-lg font-semibold hover:bg-blue-700 transition ">Register</button>
+        <button type="submit" className="bg-orange-500 text-white py-3 rounded-lg font-semibold hover:bg-orange-600 transition ">Register</button>
       </form>
-    </div>
+    </AuthLayout>
   );
 }
 
