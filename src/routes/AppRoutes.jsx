@@ -1,7 +1,8 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Register from "../pages/auth/Register";
 import Login from "../pages/auth/Login";
-import Feed from "../pages/Feed";
+import Feed from "../pages/feed/Feed";
+import Dashboard from "../pages/partner/Dashboard";
 import ProtectedRoute from "./ProtectedRoute";
 
 const AppRoutes= ()=>{
@@ -10,7 +11,8 @@ const AppRoutes= ()=>{
         <Routes>
             <Route path="/register" element={<Register/>} />
             <Route path="/login" element={<Login/>} />
-            <Route path="/feed" element={<ProtectedRoute><Feed/></ProtectedRoute>} />
+            <Route path="/feed" element={<ProtectedRoute allowedRole="user"><Feed/></ProtectedRoute>} />
+            <Route path="/partner" element={<ProtectedRoute allowedRole="partner"><Dashboard/></ProtectedRoute>}/>
         </Routes>
         </BrowserRouter>
     )

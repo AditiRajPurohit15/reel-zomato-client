@@ -19,7 +19,7 @@ export const loginFoodPartnerController = async (data)=>{
     const response = await api.post("/api/auth/food-partner/login", data);
     return response.data;
 }
-
+ 
 export const logoutFoodPartnerController = async(data)=>{
     const response = await api.get("/api/auth/food-partner/logout",data);
     return response.data;

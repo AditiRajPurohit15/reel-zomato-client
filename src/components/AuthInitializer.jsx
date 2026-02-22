@@ -11,7 +11,7 @@ const AuthInitializer = ()=>{
     useEffect(()=>{
         const loadUser = async ()=>{
             try {
-                const res = await axios.get("api/profile/me")
+                const res = await axios.get("/api/profile/me")
                 dispatch(setLogin({
                     user: res.data.user,
                     token: token,

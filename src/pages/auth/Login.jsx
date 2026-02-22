@@ -1,18 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { loginController,
   loginFoodPartnerController
  } from "../../services/auth.api";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../redux/authSlice";
 import AuthLayout from "./AuthLayout";
+import {useNavigate} from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [role, setrole] = useState("user");
   const [formData, setformData] = useState({
     email: "",
     password: "",
   });
+   useEffect(() => {
+        setformData({
+            email: "",
+            password: "",
+        });
+    }, [role]);
 
   const handleChange = (e) => {
     setformData({
@@ -31,11 +39,18 @@ const Login = () => {
       if(role === "user"){
         data = await loginController(formData);
         console.log("user api called");
+        
       }else{
         data = await loginFoodPartnerController(formData);
         console.log("food partner api called");
+        
       }
       dispatch(setLogin(data));
+      if(role === "user"){
+      navigate("/feed");
+      }else{
+      navigate("/partner");
+}
     } catch (err) {
       alert(err.response?.data?.message || "Login failed");
     }
