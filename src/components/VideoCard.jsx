@@ -3,9 +3,9 @@ import {toggleLike} from "../services/like.api"
 
 const VideoCard = ({ video }) => {
 
-    const { video: src, likeCount: initialLikeCount, _id } = video;
+    const { video: src, likeCount: initialLikeCount, _id, isLiked } = video;
 
-    const [liked, setLiked] = useState(false);
+    const [liked, setLiked] = useState(video.isLiked);
     const [likeCount, setLikeCount] = useState(initialLikeCount);
 
     const containerRef = useRef(null);

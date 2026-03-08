@@ -8,9 +8,9 @@ const Feed = () => {
     const fetchFood = async()=>{
       try {
         const data = await getFoodItems();
-        setVideos(data.foodItem);
+        setVideos(data.foods);
       } catch (error) {
-        console.log("error in fetxhing food")
+        console.log("error in fetching food")
       }
     }
     fetchFood();
