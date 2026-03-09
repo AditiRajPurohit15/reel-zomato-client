@@ -4,6 +4,7 @@ import Login from "../pages/auth/Login";
 import Feed from "../pages/feed/Feed";
 import Dashboard from "../pages/partner/Dashboard";
 import ProtectedRoute from "./ProtectedRoute";
+import UploadFood from "../pages/partner/UploadFood";
 
 const AppRoutes= ()=>{
     return(
@@ -13,6 +14,8 @@ const AppRoutes= ()=>{
             <Route path="/login" element={<Login/>} />
             <Route path="/feed" element={<ProtectedRoute allowedRole="user"><Feed/></ProtectedRoute>} />
             <Route path="/partner" element={<ProtectedRoute allowedRole="partner"><Dashboard/></ProtectedRoute>}/>
+            <Route path="/partner//routrs" element={<ProtectedRoute allowedRole="partner"><UploadFood/></ProtectedRoute>}/>
+
         </Routes>
         </BrowserRouter>
     )
