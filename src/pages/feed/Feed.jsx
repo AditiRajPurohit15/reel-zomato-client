@@ -16,10 +16,10 @@ const Feed = () => {
     fetchFood();
   },[])
  return (
-  <div className="h-screen w-full flex justify-center bg-black">
+  <div className="h-screen w-full flex justify-center items-center bg-black">
 
     {/* FEED CONTAINER */}
-    <div className="h-screen w-full max-w-md overflow-y-scroll snap-y snap-mandatory">
+    <div className="h-screen w-full max-w-md overflow-y-auto snap-y snap-mandatory scrollbar-hide">
 
       {videos.map((item) => (
         <VideoCard key={item._id} video={item}/>
