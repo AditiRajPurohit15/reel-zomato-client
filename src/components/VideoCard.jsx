@@ -3,7 +3,7 @@ import {toggleLike} from "../services/like.api"
 
 const VideoCard = ({ video }) => {
 
-    const { video: src, likeCount: initialLikeCount, _id, isLiked } = video;
+    const { video: src, likeCount: initialLikeCount, _id, isLiked, description,name } = video;
 
     const [liked, setLiked] = useState(video.isLiked);
     const [likeCount, setLikeCount] = useState(initialLikeCount);
@@ -62,19 +62,24 @@ const VideoCard = ({ video }) => {
         muted
         playsInline
         className="absolute inset-0 w-full h-full object-cover"
-        controls
+        
       />
-    {/* UI OVERLAY */}
-<div className="absolute bottom-10 right-4 flex flex-col items-center gap-4 text-white z-10">
+    {/* GRADIENT OVERLAY */}
+<div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
 
+{/* LEFT INFO */}
+<div className="absolute bottom-6 left-4 text-white z-10 max-w-[70%]">
+  <p className="text-lg font-semibold">{name}</p>
+  <p className="text-sm opacity-90">{description}</p>
+</div>
+
+{/* RIGHT ACTIONS */}
+<div className="absolute bottom-20 right-4 flex flex-col items-center gap-2 text-white z-10">
   <button onClick={handleLike} className="text-3xl">
     {liked ? "❤️" : "🤍"}
   </button>
 
-  <p className="text-sm">
-    {likeCount}
-  </p>
-
+  <p className="text-sm">{likeCount}</p>
 </div>
     </div>
   );
