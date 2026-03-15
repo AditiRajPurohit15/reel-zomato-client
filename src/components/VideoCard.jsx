@@ -1,12 +1,15 @@
 import { useEffect, useRef, useState } from "react";
 import {toggleLike} from "../services/like.api"
+import { toggleSave } from "../services/save.api";
 
 const VideoCard = ({ video }) => {
 
-    const { video: src, likeCount: initialLikeCount, _id, isLiked, description,name } = video;
+    const { video: src, likeCount: initialLikeCount, _id, isLiked, description,name,foodPartnerNamee,savesCount:initialSaveCount, isSaved } = video;
 
     const [liked, setLiked] = useState(video.isLiked);
+    const [saved, setSaved] = useState(video.isSaved)
     const [likeCount, setLikeCount] = useState(initialLikeCount);
+    const [savesCount, setSavesCount] = useState(initialSaveCount);
 
     const containerRef = useRef(null);
     const videoRef = useRef(null);
@@ -27,6 +30,17 @@ const VideoCard = ({ video }) => {
     setLikeCount(prev => previousLiked ? prev + 1 : prev - 1);
   }
 };
+const handleSave = async()=>{
+  const previousSaved = saved
+  setSaved(!saved);
+  setSavesCount(prev=> saved? prev-1 : prev+1);
+  try {
+    await toggleSave(_id);
+  } catch (error) {
+    setSaved(previousSaved);
+    setSavesCount(prev => previousSaved ? prev + 1 : prev - 1);
+  }
+}
     useEffect(()=>{
         const observer = new IntersectionObserver(
             (entries)=>{
@@ -69,6 +83,7 @@ const VideoCard = ({ video }) => {
 
 {/* LEFT INFO */}
 <div className="absolute bottom-6 left-4 text-white z-10 max-w-[70%]">
+  <p className="text-lg font-semibold">{foodPartnerNamee}</p>
   <p className="text-lg font-semibold">{name}</p>
   <p className="text-sm opacity-90">{description}</p>
 </div>
@@ -78,8 +93,11 @@ const VideoCard = ({ video }) => {
   <button onClick={handleLike} className="text-3xl">
     {liked ? "❤️" : "🤍"}
   </button>
-
   <p className="text-sm">{likeCount}</p>
+  <button onClick={handleSave} className="text-3xl">
+    {saved ? "💾" : "🖫"}
+  </button>
+  <p className="text-sm">{savesCount}</p>
 </div>
     </div>
   );
