@@ -18,3 +18,8 @@ export const getFoodForPartner = async()=>{
     const response = await api.get("/api/food/getFood");
     return response.data;
 }
+
+export const deleteFood = async (foodId) => {
+    const response = await api.delete(`/api/food/${foodId}`);
+    return response.data;
+};
