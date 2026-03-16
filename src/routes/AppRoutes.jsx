@@ -14,7 +14,7 @@ const AppRoutes= ()=>{
             <Route path="/login" element={<Login/>} />
             <Route path="/feed" element={<ProtectedRoute allowedRole="user"><Feed/></ProtectedRoute>} />
             <Route path="/partner" element={<ProtectedRoute allowedRole="partner"><Dashboard/></ProtectedRoute>}/>
-            <Route path="/partner//routrs" element={<ProtectedRoute allowedRole="partner"><UploadFood/></ProtectedRoute>}/>
+            <Route path="/partner/uploadFood" element={<ProtectedRoute allowedRole="partner"><UploadFood/></ProtectedRoute>}/>
 
         </Routes>
         </BrowserRouter>
