@@ -50,7 +50,7 @@ const Saved = () => {
           {foods.map((item) => (
             <div
               key={item._id}
-              className="bg-white rounded-lg overflow-hidden shadow"
+              className="relative bg-white rounded-lg overflow-hidden shadow group"
             >
 
               <video
