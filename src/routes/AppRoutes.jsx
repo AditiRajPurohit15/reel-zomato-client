@@ -9,7 +9,7 @@ import Saved from "../pages/profile/Saved";
 
 const AppRoutes= ()=>{
     return(
-        <BrowserRouter>
+        <>
         <Routes>
             <Route path="/register" element={<Register/>} />
             <Route path="/login" element={<Login/>} />
@@ -20,7 +20,7 @@ const AppRoutes= ()=>{
             <Route path="/saved" element={<ProtectedRoute allowedRole="user"><Saved /></ProtectedRoute>}/>
 
         </Routes>
-        </BrowserRouter>
+        </>
     )
 }
 
