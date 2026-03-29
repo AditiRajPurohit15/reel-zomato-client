@@ -51,7 +51,7 @@ const Navbar = () => {
               Dashboard
             </button>
 
-            <button onClick={() => navigate("/upload")} className="text-gray-700 hover:text-orange-500">
+            <button onClick={() => navigate("/partner/uploadFood")} className="text-gray-700 hover:text-orange-500">
               Upload
             </button>
           </>
