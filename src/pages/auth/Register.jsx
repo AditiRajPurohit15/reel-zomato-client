@@ -3,6 +3,7 @@ import { registerController, registerFoodPartnerController } from "../../service
 import AuthLayout from "./AuthLayout";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../redux/authSlice";
+import { Link } from "react-router-dom";
 
 const Register = () => {
     const dispatch = useDispatch();
@@ -177,6 +178,12 @@ const Register = () => {
         />
         
         <button type="submit" className="bg-orange-500 text-white py-3 rounded-lg font-semibold hover:bg-orange-600 transition ">Register</button>
+        <p className="text-center text-sm mt-2 text-gray-600">
+          Already have an account?{" "}
+          <Link to="/login" className="text-orange-500 font-semibold hover:underline">
+            Login
+          </Link>
+        </p>
       </form>
     </AuthLayout>
   );

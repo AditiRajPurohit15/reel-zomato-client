@@ -6,10 +6,12 @@ import { useDispatch } from "react-redux";
 import { setLogin } from "../../redux/authSlice";
 import AuthLayout from "./AuthLayout";
 import {useNavigate} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [role, setrole] = useState("user");
   const [formData, setformData] = useState({
     email: "",
@@ -35,6 +37,7 @@ const Login = () => {
       // const data = await loginController(formData);
       // console.log("API RESPONSE:", data);
       // dispatch(setLogin(data));
+      setLoading(true);
       let data;
       if(role === "user"){
         data = await loginController(formData);
@@ -106,9 +109,22 @@ const Login = () => {
             className="p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 outline-none"
           />
 
-          <button className="bg-orange-500 text-white p-3 rounded-lg font-semibold hover:bg-orange-600 transition">
-            Login
+          <button
+          disabled={loading}
+          className={`p-3 rounded-lg font-semibold text-white transition ${
+          loading
+          ? "bg-gray-400 cursor-not-allowed"
+          : "bg-orange-500 hover:bg-orange-600"
+          }`}
+          >
+          {loading ? "Logging in..." : "Login"}
           </button>
+          <p className="text-center text-sm mt-2">
+            New here?{" "}
+            <Link to="/register" className="text-orange-500 font-semibold">
+              Register
+            </Link>
+          </p>
 
         </form>
       </AuthLayout>
