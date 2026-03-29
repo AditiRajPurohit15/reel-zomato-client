@@ -6,6 +6,7 @@ import Dashboard from "../pages/partner/Dashboard";
 import ProtectedRoute from "./ProtectedRoute";
 import UploadFood from "../pages/partner/UploadFood";
 import Saved from "../pages/profile/Saved";
+import Home from "../pages/Home";
 
 const AppRoutes= ()=>{
     return(
