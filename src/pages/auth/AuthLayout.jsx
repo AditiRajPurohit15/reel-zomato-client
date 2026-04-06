@@ -1,4 +1,3 @@
-import bgVideo from "../../../public/cat.mp4"; 
 const AuthLayout = ({ children }) => {
 
   return (
@@ -9,13 +8,13 @@ const AuthLayout = ({ children }) => {
 
   {/* VIDEO */}
   <video
-    src={bgVideo}
-    autoPlay
-    loop
-    muted
-    playsInline
-    className="absolute inset-0 w-full h-full object-cover"
-  />
+  src="/cat.mp4"
+  autoPlay
+  loop
+  muted
+  playsInline
+  className="absolute inset-0 w-full h-full object-cover"
+/>
 
   {/* DARK OVERLAY */}
   <div className="absolute inset-0 bg-black/40" />
