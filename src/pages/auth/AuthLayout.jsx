@@ -1,4 +1,4 @@
-import bgVideo from "../../assets/cat.mp4"; // adjust path
+import bgVideo from "../../../public/cat.mp4"; 
 const AuthLayout = ({ children }) => {
 
   return (
