@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import {toggleLike} from "../services/like.api"
 import { toggleSave } from "../services/save.api";
+import CommentModal from "./CommentModal";
 
 const VideoCard = ({ video }) => {
 
@@ -10,6 +11,7 @@ const VideoCard = ({ video }) => {
     const [saved, setSaved] = useState(video.isSaved)
     const [likeCount, setLikeCount] = useState(initialLikeCount);
     const [savesCount, setSavesCount] = useState(initialSaveCount);
+    const [isCommentOpen, setIsCommentOpen] = useState(false);
 
     const containerRef = useRef(null);
     const videoRef = useRef(null);
@@ -41,6 +43,9 @@ const handleSave = async()=>{
     setSavesCount(prev => previousSaved ? prev + 1 : prev - 1);
   }
 }
+const handleClose = () => {
+  setIsCommentOpen(false);
+};
     useEffect(()=>{
         const observer = new IntersectionObserver(
             (entries)=>{
@@ -98,7 +103,20 @@ const handleSave = async()=>{
     {saved ? "💾" : "🖫"}
   </button>
   <p className="text-sm">{savesCount}</p>
+  <button onClick={() => {
+
+    console.log("comment clicked");
+    setIsCommentOpen(true)
+  }}
+    >
+  💬
+  </button>
 </div>
+{isCommentOpen && (
+  <CommentModal
+    foodId={_id}
+    onClose={handleClose}/>
+)}
     </div>
   );
 };
