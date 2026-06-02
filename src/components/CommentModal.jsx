@@ -19,7 +19,7 @@ const CommentModal = ({foodId, onClose}) => {
     fetchComments();
     },[foodId])
   return (
-  <div className="fixed inset-0 bg-white z-[9999] text-black p-4">
+  <div className="fixed inset-0 bg-white z-9999 text-black p-4">
 
     <div className="flex justify-between items-center mb-4">
       <h1 className="text-xl font-semibold">Comments</h1>
