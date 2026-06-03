@@ -1,13 +1,13 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import { getComments } from '../services/comment.api';
+import { getComments,createComment } from '../services/comment.api';
 
 const CommentModal = ({foodId, onClose}) => {
     console.log(foodId)
     const [comments, setComments] = useState([]);
+    const [text, setText] = useState("");
     
-    useEffect(()=>{
-        const fetchComments = async ()=> {
+    const fetchComments = async ()=> {
         try {
             const data = await getComments(foodId);
             setComments(data.comments);
@@ -16,8 +16,26 @@ const CommentModal = ({foodId, onClose}) => {
              console.log("error fetching comments");
         }
     }
-    fetchComments();
+
+    useEffect(()=>{
+     fetchComments();
     },[foodId])
+
+    const handleSubmit = async(e)=>{
+      e.preventDefault();
+      if (!text.trim()) {
+      return;
+      }
+      try {
+        await createComment(foodId, text);
+        await fetchComments();
+        setText("");
+      } catch (error) {
+        console.log("Error creating comment");
+        }
+      
+    }
+
   return (
   <div className="fixed inset-0 bg-white z-9999 text-black p-4">
 
@@ -40,6 +58,14 @@ const CommentModal = ({foodId, onClose}) => {
         <p>{comment.text}</p>
       </div>
     ))}
+    <form onSubmit={handleSubmit}>
+      <input type="text" 
+      placeholder="Write a comment..."
+      value={text}
+      onChange={(e)=>setText(e.target.value)}
+      />
+      <button type="submit">post</button>
+    </form>
   </div>
 );
 }
