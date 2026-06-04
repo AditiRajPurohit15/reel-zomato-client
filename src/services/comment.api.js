@@ -14,6 +14,11 @@ export const getReplies = async(commentId)=>{
     return response.data
 }
 
+export const deleteComment = async(commentId)=>{
+    const response = await api.delete(`/api/comments/${commentId}`)
+    return response.data
+}
+
 // deleteComment()
 
 // replyToComment()
