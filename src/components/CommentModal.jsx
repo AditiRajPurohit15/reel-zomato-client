@@ -1,11 +1,13 @@
 import React from 'react';
 import { useEffect, useState } from "react";
-import { getComments,createComment } from '../services/comment.api';
+import { getComments,createComment, deleteComment } from '../services/comment.api';
+import { useSelector } from "react-redux";
 
 const CommentModal = ({foodId, onClose}) => {
-    console.log(foodId)
     const [comments, setComments] = useState([]);
     const [text, setText] = useState("");
+    
+    const currentUser = useSelector((state)=>state.auth.user)
     
     const fetchComments = async ()=> {
         try {
@@ -36,6 +38,15 @@ const CommentModal = ({foodId, onClose}) => {
       
     }
 
+    const handleDelete = async(commentId)=>{
+      try {
+        await deleteComment(commentId)
+        await fetchComments()
+      } catch (error) {
+        console.log("Error in deleting comment");
+      }
+    }
+
   return (
   <div className="fixed inset-0 bg-white z-9999 text-black p-4">
 
@@ -51,13 +62,22 @@ const CommentModal = ({foodId, onClose}) => {
     </div>
 
     <p>Total comments: {comments.length}</p>
-
     {comments.map((comment) => (
       <div key={comment._id}>
         <p>{comment.user.fullName}</p>
         <p>{comment.text}</p>
+
+        {currentUser &&
+          comment.user._id === currentUser._id && (
+          <button onClick={() => handleDelete(comment._id)}>
+            Delete
+          </button>
+        )}
+
       </div>
     ))}
+
+
     <form onSubmit={handleSubmit}>
       <input type="text" 
       placeholder="Write a comment..."
@@ -66,6 +86,8 @@ const CommentModal = ({foodId, onClose}) => {
       />
       <button type="submit">post</button>
     </form>
+
+
   </div>
 );
 }
