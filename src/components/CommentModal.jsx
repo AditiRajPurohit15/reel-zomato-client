@@ -9,6 +9,7 @@ const CommentModal = ({foodId, onClose}) => {
     const [replyingTo, setReplyingTo] = useState(null);
     const [replyText, setReplyText] = useState("");
     const [replies, setReplies] = useState({});
+    const [visibleReplies, setVisibleReplies] = useState({});
     
     const currentUser = useSelector((state)=>state.auth.user)
     
