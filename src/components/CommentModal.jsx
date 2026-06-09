@@ -17,7 +17,7 @@ const CommentModal = ({foodId, onClose}) => {
         try {
             const data = await getComments(foodId);
             setComments(data.comments);
-            console.log(data.comments);
+            // console.log(data.comments);
         } catch (error) {
              console.log("error fetching comments");
         }
@@ -48,7 +48,12 @@ const CommentModal = ({foodId, onClose}) => {
       return;
       }
       try {
-        await replyToComment(replyingTo,replyText)
+        await replyToComment(replyingTo,replyText);
+        const data = await getReplies(replyingTo);
+        setReplies(prev=>({
+          ...prev,
+          [replyingTo]:data.replies
+        }))
         await fetchComments();
         setReplyText("");
         setReplyingTo(null);
@@ -67,7 +72,21 @@ const CommentModal = ({foodId, onClose}) => {
     }
 
     const handleViewReplies = async(commentId)=>{
+      if(visibleReplies[commentId]){
+        setVisibleReplies(prev=>({
+          ...prev,
+          [commentId]:!prev[commentId]
+        }));
+        return;
+      }
     try{
+      if(commentId in replies){
+        setVisibleReplies(prev=>({
+          ...prev,
+          [commentId]:true
+        }))
+        return
+      }
       const data = await getReplies(commentId)
       // console.log(data);
       setReplies(prev=>({
@@ -75,14 +94,16 @@ const CommentModal = ({foodId, onClose}) => {
         [commentId]:data.replies,
     }))
     
+    setVisibleReplies(prev=>({
+      ...prev,
+      [commentId]:true
+    }))
     }
     catch(error){
       console.log(error);
     }
 }
-useEffect(() => {
-    console.log(replies);
-}, [replies]);
+
   return (
   <div className="fixed inset-0 bg-black/40 z-[9999] flex justify-center items-center">
     <div className="bg-white w-[95%] max-w-2xl h-[85vh] rounded-xl shadow-2xl flex flex-col">
@@ -130,7 +151,11 @@ useEffect(() => {
                 onClick={() => handleViewReplies(comment._id)}
                 className="text-green-600 hover:underline"
               >
-                View Replies
+                {
+                  visibleReplies[comment._id]
+                  ? "Hide Replies"
+                  : "View Replies"
+                }
               </button>
 
               {currentUser &&
@@ -167,7 +192,7 @@ useEffect(() => {
             )}
 
             {/* Replies */}
-            {(replies[comment._id] || []).map((reply) => (
+            {visibleReplies[comment._id] && (replies[comment._id] || []).map((reply) => (
               <div
                 key={reply._id}
                 className="ml-8 mt-2 border-l-2 border-gray-300 pl-4"
