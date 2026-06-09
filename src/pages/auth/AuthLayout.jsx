@@ -1,35 +1,39 @@
+import { useRef } from "react";
+
 const AuthLayout = ({ children }) => {
+  const videoRef = useRef(null);
+
+  const handlePlay = () => {
+    if (videoRef.current) {
+      videoRef.current.play();
+    }
+  };
 
   return (
     <div className="min-h-screen flex">
 
       {/* LEFT SIDE BRAND */}
-      <div className="hidden md:block w-1/2 relative">
+      <div 
+        className="hidden md:block w-1/2 relative cursor-pointer"
+        onClick={handlePlay}
+      >
 
-  {/* VIDEO */}
-  <video
-  src="/cat.mp4"
-  autoPlay
-  loop
-  muted
-  playsInline
-  className="absolute inset-0 w-full h-full object-cover"
-/>
+        {/* VIDEO */}
+        <video
+          ref={videoRef}
+          src="/cat.mp4"
+          muted
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        />
 
-  {/* DARK OVERLAY */}
-  <div className="absolute inset-0 bg-black/40" />
+      </div>
 
-  {/* TEXT OVER VIDEO
-  <div className="absolute inset-0 flex items-center justify-center">
-    <h1 className="text-white text-5xl font-bold">
-      ReelBite 🍔
-    </h1>
-  </div> */}
-
-</div>
+      {/* ORANGE DIVIDER */}
+      <div className="hidden md:block w-[50px] bg-orange-500"></div>
 
       {/* RIGHT SIDE CONTENT */}
-      <div className="flex w-full md:w-1/2 items-center justify-center bg-gray-100">
+      <div className="flex w-full md:w-1/2 items-center justify-center bg-[#bcbbbd]">
         {children}
       </div>
 

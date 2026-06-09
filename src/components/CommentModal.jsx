@@ -62,10 +62,18 @@ const CommentModal = ({foodId, onClose}) => {
       }
     }
 
-    const handleDelete = async(commentId)=>{
+    const handleDelete = async(commentId,parentId)=>{
       try {
         await deleteComment(commentId)
-        await fetchComments()
+        if(!parentId){
+          await fetchComments();
+        }else{
+          const data = await getReplies(parentId);
+          setReplies(prev=>({
+        ...prev,
+        [parentId]:data.replies,
+    }))
+        }
       } catch (error) {
         console.log("Error in deleting comment");
       }
@@ -125,7 +133,12 @@ const CommentModal = ({foodId, onClose}) => {
       {/* Comments */}
       <div className="flex-1 overflow-y-auto p-5">
 
-        {comments.map((comment) => (
+        {comments.length === 0 ? (
+         <div className="flex justify-center items-center h-40 text-gray-500 text-lg font-medium">
+        💬 No comments yet. Be the first one to comment!
+        </div>
+        ) : (
+        comments.map((comment) => (
           <div
             key={comment._id}
             className="border rounded-lg p-4 mb-4 shadow-sm bg-gray-50"
@@ -161,7 +174,7 @@ const CommentModal = ({foodId, onClose}) => {
               {currentUser &&
                 comment.user._id === currentUser._id && (
                   <button
-                    onClick={() => handleDelete(comment._id)}
+                    onClick={() => handleDelete(comment._id,null)}
                     className="text-red-600 hover:underline"
                   >
                     Delete
@@ -192,23 +205,47 @@ const CommentModal = ({foodId, onClose}) => {
             )}
 
             {/* Replies */}
-            {visibleReplies[comment._id] && (replies[comment._id] || []).map((reply) => (
-              <div
-                key={reply._id}
-                className="ml-8 mt-2 border-l-2 border-gray-300 pl-4"
-              >
-                <p className="font-semibold text-sm">
-                  {reply.user.fullName}
-                </p>
+{visibleReplies[comment._id] && (
+  (replies[comment._id] || []).length === 0 ? (
+    <div className="ml-8 mt-2 text-sm text-gray-500 italic">
+      No replies yet.
+    </div>
+  ) : (
+    (replies[comment._id] || []).map((reply) => (
+      <div
+        key={reply._id}
+        className="ml-8 mt-3 pl-4 border-l-2 border-gray-300"
+      >
+        <div className="bg-gray-100 rounded-lg p-3 shadow-sm">
+          <div className="flex justify-between items-center">
+            <p className="font-semibold text-sm">
+              {reply.user.fullName}
+            </p>
 
-                <p className="text-gray-600">
-                  {reply.text}
-                </p>
-              </div>
-            ))}
+            {currentUser &&
+              reply.user._id === currentUser._id && (
+                <button
+                  onClick={() =>
+                    handleDelete(reply._id, comment._id)
+                  }
+                  className="text-red-500 text-xs hover:underline"
+                >
+                  Delete
+                </button>
+              )}
           </div>
-        ))}
+
+          <p className="text-gray-700 text-sm mt-1">
+            {reply.text}
+          </p>
+        </div>
       </div>
+    ))
+  )
+)}
+          </div>
+        )))}
+        </div>
 
       {/* Bottom Comment Form */}
       <form
