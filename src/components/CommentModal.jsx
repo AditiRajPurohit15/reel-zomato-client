@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getComments,createComment, deleteComment, replyToComment,getReplies } from '../services/comment.api';
 import { useSelector } from "react-redux";
 
-const CommentModal = ({foodId, onClose}) => {
+const CommentModal = ({foodId, onClose,updateCommentsCount}) => {
     const [comments, setComments] = useState([]);
     const [text, setText] = useState("");
     const [replyingTo, setReplyingTo] = useState(null);
@@ -34,6 +34,7 @@ const CommentModal = ({foodId, onClose}) => {
       }
       try {
         await createComment(foodId, text);
+        updateCommentsCount(1);
         await fetchComments();
         setText("");
       } catch (error) {
@@ -49,6 +50,7 @@ const CommentModal = ({foodId, onClose}) => {
       }
       try {
         await replyToComment(replyingTo,replyText);
+        updateCommentsCount(1);
         const data = await getReplies(replyingTo);
         setReplies(prev=>({
           ...prev,
@@ -66,9 +68,22 @@ const CommentModal = ({foodId, onClose}) => {
       try {
         await deleteComment(commentId)
         if(!parentId){
-          await fetchComments();
-        }else{
+
+    const commentToDelete = comments.find(
+        c => c._id === commentId
+    );
+
+    const repliesCount =
+        (replies[commentId] || []).length;
+
+    updateCommentsCount(
+        -(repliesCount + 1)
+    );
+
+    await fetchComments();
+}else{
           const data = await getReplies(parentId);
+          updateCommentsCount(-1);
           setReplies(prev=>({
         ...prev,
         [parentId]:data.replies,

@@ -4,14 +4,15 @@ import { toggleSave } from "../services/save.api";
 import CommentModal from "./CommentModal";
 
 const VideoCard = ({ video }) => {
-
-    const { video: src, likeCount: initialLikeCount, _id, isLiked, description,name,foodPartnerNamee,savesCount:initialSaveCount, isSaved } = video;
+    console.log(video)
+    const { video: src, likeCount: initialLikeCount, _id, isLiked, description,name,foodPartnerNamee,savesCount:initialSaveCount, isSaved, commentsCount: initialCommentsCount } = video;
 
     const [liked, setLiked] = useState(video.isLiked);
     const [saved, setSaved] = useState(video.isSaved)
     const [likeCount, setLikeCount] = useState(initialLikeCount);
     const [savesCount, setSavesCount] = useState(initialSaveCount);
     const [isCommentOpen, setIsCommentOpen] = useState(false);
+    const [commentsCount, setCommentsCount] = useState(initialCommentsCount);
 
     const containerRef = useRef(null);
     const videoRef = useRef(null);
@@ -70,6 +71,10 @@ const handleClose = () => {
             observer.disconnect();
         }
     },[])
+
+    const updateCommentsCount = (delta) => {
+  setCommentsCount((prev) => prev + delta);
+};
   return (
     <div 
     ref={containerRef}
@@ -111,11 +116,17 @@ const handleClose = () => {
     >
   💬
   </button>
+  <p className="text-sm">
+    {commentsCount}
+  </p>
 </div>
 {isCommentOpen && (
   <CommentModal
     foodId={_id}
-    onClose={handleClose}/>
+    onClose={handleClose}
+    updateCommentsCount={updateCommentsCount}
+    />
+    
 )}
     </div>
   );
