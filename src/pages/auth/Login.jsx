@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { loginController,
-  loginFoodPartnerController
+  loginFoodPartnerController,
+  googleLoginController
  } from "../../services/auth.api";
 import { useDispatch } from "react-redux";
 import { setLogin } from "../../redux/authSlice";
 import AuthLayout from "./AuthLayout";
 import {useNavigate} from "react-router-dom";
 import { Link } from "react-router-dom";
+import { GoogleLogin } from "@react-oauth/google";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -125,6 +127,30 @@ const Login = () => {
               Register
             </Link>
           </p>
+
+          <hr className="my-2" />
+
+          {role === "user" && (
+  <GoogleLogin
+    onSuccess={async (credentialResponse) => {
+      try {
+        const data = await googleLoginController({
+        credential: credentialResponse.credential
+      })
+
+      dispatch(setLogin(data))
+
+      navigate("/feed");
+
+      } catch (error) {
+        console.error(error);
+      }
+    }}
+    onError={() => {
+      console.log("Login Failed");
+    }}
+  />
+)}
 
         </form>
       </AuthLayout>

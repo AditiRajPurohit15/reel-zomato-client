@@ -29,3 +29,8 @@ export const registerFoodPartnerController = async(data)=>{
     const response = await api.post("/api/auth/food-partner/register",data);
     return response.data;
 }
+
+export const googleLoginController = async(data)=>{
+    const response = await api.post("/api/auth/google",data);
+    return response.data;
+}
