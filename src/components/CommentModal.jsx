@@ -66,22 +66,28 @@ const CommentModal = ({foodId, onClose,updateCommentsCount}) => {
 
     const handleDelete = async(commentId,parentId)=>{
       try {
-        await deleteComment(commentId)
         if(!parentId){
 
     const commentToDelete = comments.find(
         c => c._id === commentId
     );
 
-    const repliesCount =
+    let repliesCount =
         (replies[commentId] || []).length;
+
+    if(repliesCount==0){
+      await fetchComments();
+      repliesCount=replies[commentId].length
+    }
 
     updateCommentsCount(
         -(repliesCount + 1)
     );
-
+    
+    await deleteComment(commentId)
     await fetchComments();
 }else{
+          await deleteComment(commentId);
           const data = await getReplies(parentId);
           updateCommentsCount(-1);
           setReplies(prev=>({
