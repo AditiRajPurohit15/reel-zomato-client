@@ -1,16 +1,109 @@
-# React + Vite
+# 🍔 Reel Zomato — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> A reels-based food discovery platform inspired by Instagram Reels/TikTok and Zomato.
 
-Currently, two official plugins are available:
+This repository contains the **frontend** of **Reel Zomato**, built using **React, Vite, Tailwind CSS, and Redux Toolkit**. The application allows users to discover food through short-form videos while food partners can upload and manage their own content.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 🌐 Live Demo
 
-## React Compiler
+**Frontend:** *(Add your Vercel link here)*
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Backend Repository:** *(Add your Backend GitHub link here)*
 
-## Expanding the ESLint configuration
+**Backend API:** *(Add your Render link here)*
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+# ✨ Features
+
+## 👤 User
+
+* Register & Login
+* Google OAuth Login
+* Watch food reels
+* Like reels
+* Save reels
+* View saved reels
+* Comment on reels
+* Reply to comments
+* Delete own comments and replies
+
+---
+
+## 🍽️ Food Partner
+
+* Register & Login
+* Upload food reels
+* View uploaded reels
+* Delete uploaded reels
+
+---
+
+## 🎥 Feed Experience
+
+* Vertical reel feed
+* Snap scrolling
+* Auto-play using Intersection Observer
+* Auto-pause when out of viewport
+* Optimistic UI updates
+
+---
+
+## 🛠️ Tech Stack
+
+* React
+* Vite
+* Tailwind CSS
+* Redux Toolkit
+* React Router
+* Axios
+
+---
+
+# 📂 Frontend Structure
+
+```text
+src
+│
+├── assets
+├── components
+├── pages
+├── redux
+├── routes
+└── services
+```
+
+---
+
+# 🚀 Installation
+
+```bash
+git clone <frontend-repository-url>
+
+cd Reel-Zomato-Frontend
+
+npm install
+
+npm run dev
+```
+
+---
+
+# 📸 Screenshots
+
+*(Add screenshots/GIFs here)*
+
+* Home Feed
+* Login
+* Upload Reel
+* Partner Dashboard
+* Saved Reels
+* Nested Comments
+
+---
+
+# 👩‍💻 Author
+
+**Aditi Raj Purohit**
+
+This frontend was built with a focus on production-style architecture, reusable components, optimistic UI updates, and scalable state management.
